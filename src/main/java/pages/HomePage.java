@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocator;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import static utils.PropertiesReader.*;
 
@@ -21,7 +20,7 @@ public class HomePage extends BasePage{
 
 
     @FindBy(xpath = "//a[text()='LOGIN']")
-    WebElement btnLogin;
+    WebElement linkLogin;
 
     @FindBy(xpath = "//form/input[1]")
     WebElement inputEmail;
@@ -31,8 +30,8 @@ public class HomePage extends BasePage{
 
 
 
-    public void clickBtnLogin(){
-        btnLogin.click();
+    public void clickLinkLogin(){
+        linkLogin.click();
     }
 
     public void method(){
@@ -47,7 +46,7 @@ public class HomePage extends BasePage{
 
 
     public void ajaxMethod(){
-        btnLogin.click();
+        linkLogin.click();
         inputEmail.sendKeys("dhsf@hsg.kjh");
     }
 }

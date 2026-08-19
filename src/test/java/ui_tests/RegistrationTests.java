@@ -10,7 +10,6 @@ import pages.ContactsPage;
 import pages.HomePage;
 import pages.LoginPage;
 import static utils.UserFactory.*;
-import static utils.PropertiesReader.*;
 
 import java.util.Random;
 
@@ -19,7 +18,7 @@ public class RegistrationTests extends AppManager {
 
     @BeforeMethod
     public void goToRegistrationLoginPage(){
-        new HomePage(getDriver()).clickBtnLogin();
+        new HomePage(getDriver()).clickLinkLogin();
         loginPage = new LoginPage(getDriver());
     }
 
