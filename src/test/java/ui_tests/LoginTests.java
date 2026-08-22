@@ -19,7 +19,6 @@ public class LoginTests extends AppManager {
     public void goToRegistrationLoginPage(){
         new HomePage(getDriver()).clickLinkLogin();
         loginPage = new LoginPage(getDriver());
-
     }
 
     @Test
@@ -45,5 +44,74 @@ public class LoginTests extends AppManager {
         Assert.assertEquals(loginPage.closeAlert(),
                 "Wrong email or password");
     }
+
+    // HW 7.01
+    @Test
+    public void loginNegativeAllFieldsEmptyWithClickOnIt(){
+        UserLombok user = UserLombok.builder()
+                .username("")
+                .password("")
+                .build();
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnLogin();
+        Assert.assertEquals(loginPage.closeAlert(),
+                "Wrong email or password");
+    }
+
+    // HW 7.02
+    @Test
+    public void loginNegativeEmptyEmailFieldWithClickOnItTest(){
+        UserLombok user = UserLombok.builder()
+                .username("")
+                .password(getProperty("base.properties","password"))
+                .build();
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnLogin();
+        Assert.assertEquals(loginPage.closeAlert(),
+                "Wrong email or password");
+    }
+
+    // HW 7.03
+    @Test
+    public void loginNegativeEmptyPasswordFieldWithClickOnItTest(){
+        UserLombok user = UserLombok.builder()
+                .username(getProperty("base.properties","email"))
+                .password("")
+                .build();
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnLogin();
+        Assert.assertEquals(loginPage.closeAlert(),
+                "Wrong email or password");
+    }
+
+    // HW 7.04
+    @Test
+    public void loginNegativeInvalidEmailTest(){
+        UserLombok user = UserLombok.builder()
+                .username("renate.certoka11@gmail.com")
+                .password(getProperty("base.properties","password"))
+                .build();
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnLogin();
+        Assert.assertEquals(loginPage.closeAlert(),
+                "Wrong email or password");
+    }
+
+    // HW 7.05
+    @Test
+    public void loginNegativeInvalidPasswordTest(){
+        UserLombok user = UserLombok.builder()
+                .username(getProperty("base.properties","email"))
+                .password("123RenC!$")
+                .build();
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnLogin();
+        Assert.assertEquals(loginPage.closeAlert(),
+                "Wrong email or password");
+    }
+
+
+
+
 
 }
