@@ -32,6 +32,26 @@ public class UserDataProvider {
         return list.listIterator();
     }
 
+    @DataProvider
+    public Iterator<UserLombok> dataProviderInvalidPasswordOrEmail(){
+        List<UserLombok> list = new ArrayList<>();
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/test/resources/invalid_email - Sheet1.csv"))){
+            String line = bufferedReader.readLine();
+            while (line != null){
+                String[] splitLine = line.split(",");
+                list.add(UserLombok.builder()
+                        .username(splitLine[0])
+                        .password(splitLine[1])
+                        .build());
+                line = bufferedReader.readLine();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            System.out.println("created exception");
+        }
+        return list.listIterator();
+    }
+
 
 
 }
