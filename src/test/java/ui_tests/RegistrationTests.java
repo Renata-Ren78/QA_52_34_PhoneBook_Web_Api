@@ -3,6 +3,8 @@ package ui_tests;
 import data_providers.UserDataProvider;
 import dto.UserLombok;
 import manager.AppManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -16,8 +18,10 @@ import java.util.Random;
 public class RegistrationTests extends AppManager {
     LoginPage loginPage;
 
+
     @BeforeMethod
     public void goToRegistrationLoginPage(){
+        logger.info("Start registration test");
         new HomePage(getDriver()).clickLinkLogin();
         loginPage = new LoginPage(getDriver());
     }
