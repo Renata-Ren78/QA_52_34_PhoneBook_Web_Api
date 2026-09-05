@@ -54,6 +54,8 @@ public class TestNGListener implements ITestListener {
     public void onTestFailedWithTimeout(ITestResult result) {
         ITestListener.super.onTestFailedWithTimeout(result);
         logger.error("test failed with timeout --> " + result.getName());
+        this.driver = ((AppManager)result.getInstance()).getDriver();
+        TakeScreenShot.takeScreenShot((TakesScreenshot) driver);
     }
 
     @Override
