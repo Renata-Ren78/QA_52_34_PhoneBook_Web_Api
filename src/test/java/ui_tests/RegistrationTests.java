@@ -43,7 +43,7 @@ public class RegistrationTests extends AppManager {
                 .validateTextInMessageNoContacts("No Contacts here!"));
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void registrationPositiveTestWithFakerTest(){
         UserLombok user = positiveUser();
         System.out.println(user);

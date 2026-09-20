@@ -28,15 +28,47 @@ test {
     useTestNG()
 }
 
-tasks.register('qa', Test){
-    useTestNG(){
-       suites'src/test/resources/testng.xml'
+tasks.register('qa', Test) {
+    useTestNG() {
+        suites 'src/test/resources/testng.xml'
     }
 }
 
 
-tasks.register('scope', Test){
+tasks.register('scope', Test) {
+    useTestNG() {
+        suites 'src/test/resources/scope.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+}
+
+tasks.register('qa_suites', Test) {
+    useTestNG() {
+        def suite = System.getProperty('suite', '')
+        if (suite.equals('registration_login')) {
+            suites 'src/test/resources/testng.xml'
+        }
+        else if (suite.equals('smoke_tests')) {
+            suites 'src/test/resources/scope.xml'
+        }
+        else {
+            suites 'src/test/resources/base.xml'
+        }
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+}
+
+
+tasks.register('groups', Test){
     useTestNG(){
-        suites'src/test/resources/scope.xml'
+        def groups = System.getProperty('groups')
+        if (groups != null){
+            includeGroups groups
+        }
+        suites 'src/test/resources/base.xml'
     }
 }
