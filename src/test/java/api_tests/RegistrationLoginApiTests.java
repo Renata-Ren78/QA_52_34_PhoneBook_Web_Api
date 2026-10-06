@@ -337,7 +337,7 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void registrationApiWrongPasswordFormatOnlyDigitsNegativeTest() {
         UserLombok user = positiveUser();
-        user.setUsername("rasasddfgrhj@gmail.com");
+        user.setUsername("rasasddfgrhj1@gmail.com");
         user.setPassword("1234567881");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
@@ -358,7 +358,7 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void registrationApiWrongPasswordFormatOnlyLettersNegativeTest() {
         UserLombok user = positiveUser();
-        user.setUsername("rasasddfgrhj@gmail.com");
+        user.setUsername("rasasddfgrhj2@gmail.com");
         user.setPassword("qrwetahsjdysga");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
@@ -379,7 +379,7 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void registrationApiWrongPasswordFormatDigitsAndSymbolNegativeTest() {
         UserLombok user = positiveUser();
-        user.setUsername("rasasddfgrhj@gmail.com");
+        user.setUsername("rasasddfgrhj3@gmail.com");
         user.setPassword("12345678984!");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
@@ -400,7 +400,7 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void registrationApiWrongPasswordFormatLettersAndSymbolNegativeTest() {
         UserLombok user = positiveUser();
-        user.setUsername("rasasddfgrhj@gmail.com");
+        user.setUsername("rasasddfgrhj4@gmail.com");
         user.setPassword("qrwetahsjdysga!");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
@@ -418,6 +418,69 @@ public class RegistrationLoginApiTests implements BaseApi {
     }
 
     // HW_13_14
+    @Test
+    public void registrationApiWrongPasswordFormatOnlySymbolsNegativeTest() {
+        UserLombok user = positiveUser();
+        user.setUsername("rasasddfgrhj5@gmail.com");
+        user.setPassword("$?=.*[@$#^&*!]!");
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + REGISTRATION_URL)
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(response);
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_13_15
+    @Test
+    public void registrationApiWrongPasswordFormatTooShortNegativeTest() {
+        UserLombok user = positiveUser();
+        user.setUsername("rasasddfgrhj6@gmail.com");
+        user.setPassword("Asd1!");
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + REGISTRATION_URL)
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(response);
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_13_16
+    @Test
+    public void registrationApiWrongPasswordFormatTooLongNegativeTest() {
+        UserLombok user = positiveUser();
+        user.setUsername("rasasddfgrhj7@gmail.com");
+        user.setPassword("AadfdghWRsd12345567$234!!!sfdg4563QWE");
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + REGISTRATION_URL)
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(response);
+        Assert.assertEquals(response.code(), 409);
+    }
+
+    // HW_13_17
     @Test
     public void registrationApiWrongBodyNegativeTest() {
         //UserLombok user = positiveUser();
