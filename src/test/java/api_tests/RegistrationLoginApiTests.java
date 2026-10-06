@@ -137,8 +137,8 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void loginApiEmptyPasswordAndEmailNegativeTest() {
         UserLombok user = UserLombok.builder()
-                .username( "")
-                .password( "")
+                .username("")
+                .password("")
                 .build();
         RequestBody requestBody = RequestBody.create
                 (GSON.toJson(user), JSON);
@@ -160,8 +160,8 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void loginApiEmptyEmailNegativeTest() {
         UserLombok user = UserLombok.builder()
-                .username( "")
-                .password( "123RenC!")
+                .username("")
+                .password("123RenC!")
                 .build();
         RequestBody requestBody = RequestBody.create
                 (GSON.toJson(user), JSON);
@@ -183,8 +183,8 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void loginApiEmptyPasswordNegativeTest() {
         UserLombok user = UserLombok.builder()
-                .username( "renate.certoka1@gmail.com")
-                .password( "")
+                .username("renate.certoka1@gmail.com")
+                .password("")
                 .build();
         RequestBody requestBody = RequestBody.create
                 (GSON.toJson(user), JSON);
@@ -206,8 +206,8 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void loginApiWrongEmailFormatNegativeTest() {
         UserLombok user = UserLombok.builder()
-                .username( "renate.certoka1@gmailcom")
-                .password( "123RenC!")
+                .username("renate.certoka1@gmailcom")
+                .password("123RenC!")
                 .build();
         RequestBody requestBody = RequestBody.create
                 (GSON.toJson(user), JSON);
@@ -229,8 +229,8 @@ public class RegistrationLoginApiTests implements BaseApi {
     @Test
     public void loginApiUnregistratedUserNegativeTest() {
         UserLombok user = UserLombok.builder()
-                .username( "renate.certoka3@gmai.lcom")
-                .password( "123RenC!")
+                .username("renate.certoka3@gmai.lcom")
+                .password("123RenC!")
                 .build();
         RequestBody requestBody = RequestBody.create
                 (GSON.toJson(user), JSON);
@@ -500,11 +500,6 @@ public class RegistrationLoginApiTests implements BaseApi {
         System.out.println(response);
         Assert.assertEquals(response.code(), 500);
     }
-
-
-
-
-
 
 
 }
