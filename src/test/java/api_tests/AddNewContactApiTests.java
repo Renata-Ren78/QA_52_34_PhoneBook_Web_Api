@@ -17,6 +17,7 @@ import static utils.ContactFactory.*;
 import utils.ILogin;
 
 import java.io.IOException;
+import data_providers.ContactDataProvider;
 
 public class AddNewContactApiTests implements BaseApi, ILogin {
     TokenDto tokenDto;
@@ -120,4 +121,245 @@ public class AddNewContactApiTests implements BaseApi, ILogin {
         Assert.assertEquals(response.code(), 403);
 
     }
+
+    // HW_14_01
+    @Test
+    public void addNewContactWithEmptyNameNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setName("");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_02
+    @Test
+    public void addNewContactWithEmptyLastNameNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setLastName("");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_03
+    @Test
+    public void addNewContactWithInvalidEmailNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setEmail("john@@gmail.com");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_04
+    @Test
+    public void addNewContactWithEmptyPhoneNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setPhone("");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_05
+    @Test
+    public void addNewContactWithInvalidPhoneTooShortNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setPhone("052123456");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_06
+    @Test
+    public void addNewContactWithInvalidPhoneTooLongNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setPhone("0521234567777777");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_07
+    @Test
+    public void addNewContactWithEmptyAddressNegativeTest() {
+        ContactDto contact = positiveContact();
+        contact.setAddress("");
+        System.out.println(contact);
+        System.out.println(tokenDto.getToken());
+        RequestBody requestBody = RequestBody.create
+                (GSON.toJson(contact), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_08
+    @Test(dataProvider = "dataProviderInvalidContactData",
+            dataProviderClass = ContactDataProvider.class)
+    public void addNewContactInvalidDataNegativeTest(ContactDto contact) {
+
+        System.out.println(contact);
+
+        RequestBody requestBody =
+                RequestBody.create(GSON.toJson(contact), JSON);
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertEquals(response.code(), 400);
+    }
+
+    // HW_14_09
+    @Test(dataProvider = "dataProviderInvalidContactData",
+            dataProviderClass = ContactDataProvider.class)
+    public void addNewContactInvalidDataNegativeTest2(ContactDto contact) {
+
+        System.out.println(contact);
+
+        RequestBody requestBody = RequestBody.create(GSON.toJson(contact), TEXT);
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .addHeader(AUTH, tokenDto.getToken())
+                .post(requestBody)
+                .build();
+
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertEquals(response.code(), 500);
+    }
+
+    // HW_14_09
+    @Test
+    public void addNewContactWithoutTokenNegativeTest() {
+        ContactDto contact = positiveContact();
+
+        RequestBody requestBody =
+                RequestBody.create(GSON.toJson(contact), JSON);
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + ADD_CONTACT)
+                .post(requestBody)
+                .build();
+
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertEquals(response.code(), 403);
+    }
+
+
+
+
 }
+
+
