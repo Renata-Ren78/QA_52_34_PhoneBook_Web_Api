@@ -348,12 +348,13 @@ public class AddNewContactApiTests implements BaseApi, ILogin {
                 .build();
 
         Response response;
+        System.out.println(request);
         try {
             response = OK_HTTP_CLIENT.newCall(request).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println(response);
         Assert.assertEquals(response.code(), 403);
     }
 

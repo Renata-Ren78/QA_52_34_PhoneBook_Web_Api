@@ -11,6 +11,7 @@ public interface BaseApi {
     String ADD_CONTACT = "/v1/contacts";
     String GET_ALL_CONTACT = "/v1/contacts";
     String PUT_CONTACT = "/v1/contacts";
+    String DELETE_CONTACT = "/v1/contacts/";
 
     MediaType JSON = MediaType.get("application/json");
     OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();

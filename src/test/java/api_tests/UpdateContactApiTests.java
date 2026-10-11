@@ -14,7 +14,7 @@ import utils.ILogin;
 
 import java.io.IOException;
 
-import  static  utils.ContactFactory.*;
+import static utils.ContactFactory.*;
 
 public class UpdateContactApiTests implements
         BaseApi, ICreateContact, ILogin {
@@ -22,20 +22,20 @@ public class UpdateContactApiTests implements
     TokenDto tokenDto;
 
     @BeforeClass
-    public void login(){
+    public void login() {
         tokenDto = loginGetToken();
         idContact = createContact();
         System.out.println(idContact);
     }
 
     @Test
-    public void updateContactPositiveTest(){
+    public void updateContactPositiveTest() {
         ContactDto contact = positiveContact();
         contact.setId(idContact);
         RequestBody requestBody =
                 RequestBody.create(GSON.toJson(contact), JSON);
         Request request = new Request.Builder()
-                .url(BASE_URL+PUT_CONTACT)
+                .url(BASE_URL + PUT_CONTACT)
                 .addHeader(AUTH, tokenDto.getToken())
                 .put(requestBody)
                 .build();
@@ -45,7 +45,23 @@ public class UpdateContactApiTests implements
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertEquals(response.code(),200);
+        Assert.assertEquals(response.code(), 200);
+    }
+
+    @Test
+    public void deleteContactPositiveTest() {
+        Request request = new Request.Builder()
+                .url(BASE_URL + DELETE_CONTACT + idContact)
+                .addHeader(AUTH, tokenDto.getToken())
+                .delete()
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(), 200);
     }
 
 
